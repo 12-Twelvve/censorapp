@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Censor Web App</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #response {
+        margin-top: 10px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Censor Web App</h2>
+<form id="myForm">
+    <label for="textInput">Enter Text:</label>
+    <input type="text" id="textInput" name="textInput">
+    <button type="submit">Submit</button>
+</form>
+
+<div id="response"></div>
+
+<script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get the value from the text input
+        var textValue = document.getElementById('textInput').value;
+
+        // Make an AJAX request to the prediction API
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'http://13.236.160.8/predict?sent=' + encodeURIComponent(textValue), true);
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 300) {
+                // Success
+                var responseData = JSON.parse(xhr.responseText);
+                // Display the response
+                document.getElementById('response').innerText = "Censored: " + responseData.prediction;
+            } else {
+                // Error
+                document.getElementById('response').innerText = "Error fetching data from API";
+            }
+        };
+        xhr.onerror = function() {
+            // Error
+            document.getElementById('response').innerText = "Error fetching data from API";
+        };
+        xhr.send();
+    });
+</script>
+
+</body>
+</html>
