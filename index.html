@@ -33,7 +33,7 @@
 
         // Make an AJAX request to the prediction API
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'http://13.236.160.8/predict?sent=' + encodeURIComponent(textValue), true);
+        xhr.open('GET', 'http://3.107.36.156/predict?sent=' + encodeURIComponent(textValue), true);
         xhr.onload = function() {
             if (xhr.status >= 200 && xhr.status < 300) {
                 // Success
